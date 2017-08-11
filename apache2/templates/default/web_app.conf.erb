@@ -38,6 +38,10 @@
   RewriteLogLevel 0
   <% end -%>
 
+  #Redirect to SSL (https)
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule !/status https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
+
   # Canonical host, <%= @params[:server_name] %>
   RewriteCond %{HTTP_HOST}   !^<%= @params[:server_name] %> [NC]
   RewriteCond %{HTTP_HOST}   !^$
@@ -47,7 +51,4 @@
   RewriteCond %{SCRIPT_FILENAME} !maintenance.html
   RewriteRule ^.*$ /system/maintenance.html [L]
 
-  #Redirect to SSL (https)
-  RewriteCond %{HTTP:X-Forwarded-Proto} !https
-  RewriteRule !/status https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
 </VirtualHost>
