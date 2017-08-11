@@ -47,4 +47,7 @@
   RewriteCond %{SCRIPT_FILENAME} !maintenance.html
   RewriteRule ^.*$ /system/maintenance.html [L]
 
+  #Redirect to SSL (https)
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule !/status https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
 </VirtualHost>
